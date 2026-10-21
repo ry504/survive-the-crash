@@ -333,7 +333,7 @@ The reference is the approved mockup from the 2026-10-19 design session: green p
 
 ## 10. Stack and delivery
 
-- Next.js 16 + React, static export (`output: "export"`), deployed on Vercel. Next 16.4's `cacheComponents` / partial prerendering can't be used with static export, so they're off.
+- Next.js 16 + React, static export (`output: "export"`), deployed on GitHub Pages from Ryan's personal GitHub (Ryan's call, 2026-10-20: a personal portfolio piece, not the SchooledUp Vercel team). Next 16.4's `cacheComponents` / partial prerendering can't be used with static export, so they're off.
 - The data pipeline is a Python script (yfinance) whose JSON output is committed to the repo.
 - No logins in v1. Leaderboard (Supabase) is optional later.
 
