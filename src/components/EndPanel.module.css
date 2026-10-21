@@ -1,0 +1,287 @@
+/* MISSION COMPLETE / FINAL REPORT (spec §7). Pixel CRT style (spec §9): notched frames, no rounded corners. */
+.backdrop {
+  z-index: 70;
+}
+.box {
+  width: min(860px, 100%);
+  max-height: calc(100dvh - 32px);
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Internal scroll only when the window is too short; the page itself never scrolls. */
+.body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 18px 14px;
+}
+
+.kicker,
+.label,
+.scoreWho,
+.vs,
+.badge,
+.table thead th,
+.extras dt {
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+}
+.kicker {
+  color: var(--yellow);
+}
+.label {
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+
+/* ---------- Rank + headline skill score ---------- */
+.top {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+.rank {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.rankArt {
+  flex: none;
+  animation: bob 0.6s steps(2) infinite alternate;
+}
+.rankTitle {
+  font-family: var(--font-label);
+  font-size: 24px;
+  line-height: 30px;
+  text-shadow: 3px 3px 0 #000;
+}
+.rankPanic {
+  color: var(--red);
+}
+.rankSurvivor {
+  color: var(--orange);
+}
+.rankSteady {
+  color: var(--green);
+}
+.rankLegend {
+  color: var(--money);
+}
+.blurb {
+  font-size: 20px;
+  line-height: 20px;
+  margin-top: 6px;
+}
+
+.score {
+  position: relative;
+  padding: 10px 12px;
+  background: var(--tint);
+  clip-path: var(--notch);
+}
+.scoreRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+.scoreRow > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.scoreWho {
+  color: var(--dim);
+}
+.scoreBig {
+  font-family: var(--font-label);
+  font-size: 28px;
+  line-height: 32px;
+  color: var(--yellow);
+}
+.scoreGhost {
+  color: var(--dim);
+  font-size: 20px;
+  line-height: 24px;
+}
+.vs {
+  color: var(--dim);
+  padding-bottom: 6px;
+}
+.gap {
+  font-size: 18px;
+  line-height: 18px;
+  margin-top: 8px;
+  color: var(--dim);
+}
+
+/* ---------- Stats table ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 22px;
+  line-height: 22px;
+}
+.table th,
+.table td {
+  padding: 5px 10px;
+  border-bottom: 2px solid var(--line);
+  text-align: right;
+  font-weight: normal;
+}
+.table th[scope="row"],
+.table thead th:first-child {
+  text-align: left;
+}
+.table thead th {
+  color: var(--yellow);
+  padding-bottom: 7px;
+}
+.plain {
+  color: var(--ink);
+}
+.term {
+  margin-left: 10px;
+  color: var(--blue);
+}
+.ghostCell {
+  color: var(--dim);
+}
+/* The better cell: solid highlight (stepped, no glow). */
+.best {
+  background: var(--green);
+  color: var(--bg);
+}
+
+/* ---------- Regret, extras, badge, honesty ---------- */
+.regret {
+  padding: 8px 12px;
+  background: var(--pink-bg);
+  border-left: 4px solid var(--pink);
+  color: var(--pink);
+  font-size: 21px;
+  line-height: 22px;
+}
+.bestBuy {
+  color: var(--green);
+  margin-top: 4px;
+}
+.extras {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.extras > div {
+  padding: 6px 10px;
+  border: 2px solid var(--line);
+}
+.extras dt {
+  color: var(--dim);
+  font-size: 9px;
+  line-height: 12px;
+}
+.extras dd {
+  font-size: 24px;
+  line-height: 24px;
+  margin-top: 4px;
+}
+.badge {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--red);
+  color: #000;
+  clip-path: var(--notch);
+  animation: blink 1.1s steps(2) 3;
+}
+.honesty {
+  font-size: 18px;
+  line-height: 18px;
+  color: var(--dim);
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 720px) {
+  .body {
+    padding: 18px 10px 12px;
+  }
+  .top {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .rankArt {
+    width: 56px;
+    height: auto;
+  }
+  .rankTitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .scoreBig {
+    font-size: 22px;
+    line-height: 26px;
+  }
+  .table {
+    font-size: 19px;
+    line-height: 19px;
+  }
+  .table th,
+  .table td {
+    padding: 5px 4px;
+  }
+  .term {
+    display: block;
+    margin-left: 0;
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .extras {
+    grid-template-columns: 1fr 1fr;
+  }
+  .buttons > * {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rankArt,
+  .badge {
+    animation: none;
+  }
+}
+
+/* Keyframe names are scoped per CSS module, so these are local copies of game.module.css's. */
+@keyframes bob {
+  to {
+    transform: translateY(-3px);
+  }
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.insurance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+  font-size: 21px;
+  line-height: 22px;
+}
+.insurance b {
+  font-weight: normal;
+}

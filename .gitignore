@@ -1,0 +1,8 @@
+__pycache__/
+node_modules/
+.next/
+out/
+.venv/
+.DS_Store
+*.tsbuildinfo
+docs/LEARNING_LOG.md

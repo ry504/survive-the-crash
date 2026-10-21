@@ -1,0 +1,2580 @@
+/* Game screen styles. Every animation is stepped; every corner is a two-layer notch (never border + clip-path). */
+
+.screen {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 16px 28px;
+}
+
+/* ---------- Two-layer notched frame ---------- */
+.panelWrap {
+  position: relative;
+  margin-top: 8px;
+  min-width: 0;
+}
+.panelTitle {
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  z-index: 2;
+  padding: 0 6px;
+  background: var(--bg);
+  color: var(--yellow);
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+/* Background layer: two notched blocks (outer = line colour, inner = fill). Content sits on top,
+   unclipped, so pop-ups (goblin, stamps, damage numbers) can spill past the frame. */
+.frame {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--notch);
+  background: var(--line);
+  padding: 2px;
+}
+.frameInner {
+  height: 100%;
+  clip-path: var(--notch);
+  background: var(--bg);
+}
+.panelBody {
+  position: relative;
+  height: 100%;
+  padding: 18px 14px 14px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  padding: 0;
+  min-height: 44px;
+  --edge: var(--green);
+  --fill: #0f2412;
+  --ink: var(--green);
+}
+.btnOuter {
+  display: flex;
+  flex: 1;
+  clip-path: var(--notch);
+  background: var(--edge);
+  padding: 2px 2px 6px;
+}
+.btnInner {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 10px;
+  clip-path: var(--notch);
+  background: var(--fill);
+  color: var(--ink);
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.btn:active:not(:disabled) .btnOuter {
+  padding-bottom: 3px;
+  transform: translateY(3px);
+}
+.btn[aria-pressed="true"] .btnInner {
+  background: var(--edge);
+  color: var(--bg);
+}
+.dim[aria-pressed="true"] .btnOuter {
+  background: var(--ink);
+}
+.dim[aria-pressed="true"] .btnInner {
+  background: var(--ink);
+  color: var(--bg);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+.red {
+  --edge: var(--red);
+  --fill: #2a0b12;
+  --ink: var(--red);
+}
+.pink {
+  --edge: var(--pink);
+  --fill: var(--pink-bg);
+  --ink: var(--pink);
+}
+.blue {
+  --edge: var(--blue);
+  --fill: #071a26;
+  --ink: var(--blue);
+}
+.yellow {
+  --edge: var(--dark-gold);
+  --fill: var(--yellow);
+  --ink: var(--bg);
+}
+.dim {
+  --edge: var(--line);
+  --fill: #0c160d;
+  --ink: var(--dim);
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+}
+.hudItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+.hudLabel {
+  color: var(--yellow);
+}
+.money {
+  color: var(--money);
+}
+.ghost {
+  color: var(--dim);
+}
+.hearts {
+  display: flex;
+  gap: 3px;
+}
+.xpBar {
+  display: flex;
+  gap: 2px;
+}
+.xpSeg {
+  width: 6px;
+  height: 10px;
+  background: var(--line);
+}
+.xpSegOn {
+  background: var(--ink);
+}
+
+/* ---------- Main grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.duo {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 14px;
+}
+
+/* ---------- Watchlist ---------- */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.row {
+  display: grid;
+  grid-template-columns: 34px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 4px 8px;
+  width: 100%;
+  text-align: left;
+  font-size: 22px;
+}
+.rowButton {
+  outline-offset: -2px;
+}
+.rowButton:hover {
+  background: #0f1d11;
+}
+.rowSelected {
+  background: var(--yellow);
+  color: var(--bg);
+}
+.rowSelected:hover {
+  background: var(--yellow);
+}
+.ticker {
+  font-family: var(--font-label);
+  font-size: 11px;
+}
+.sub {
+  color: var(--dim);
+  font-size: 17px;
+}
+.rowSelected .sub {
+  color: #3b2f05;
+}
+.up {
+  color: var(--green);
+}
+.down {
+  color: var(--red);
+}
+.rowSelected .up {
+  color: #0b5a16;
+}
+.rowSelected .down {
+  color: #8a0019;
+}
+.change {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 78px;
+  justify-content: flex-end;
+}
+.iconCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hint {
+  margin-top: 6px;
+  color: var(--dim);
+  font-size: 17px;
+}
+
+/* ---------- Bag ---------- */
+.bagRow {
+  display: grid;
+  grid-template-columns: 34px 52px 1fr 64px;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  font-size: 20px;
+}
+.bagRow {
+  position: relative;
+}
+.paper {
+  grid-column: 2 / -1;
+  margin-top: -4px;
+  font-size: 17px;
+  opacity: 0.55;
+}
+.stamp {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: var(--bg);
+  outline: 2px solid currentColor;
+  font-family: var(--font-label);
+  font-size: 10px;
+  line-height: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: stampIn 2.4s forwards;
+}
+.stampGain {
+  color: var(--green);
+}
+.stampLoss {
+  color: var(--red);
+}
+.bar {
+  display: flex;
+  gap: 2px;
+}
+.barSeg {
+  flex: 1;
+  height: 10px;
+  background: var(--line);
+}
+.barOn {
+  background: var(--ink);
+}
+.right {
+  text-align: right;
+}
+.ticket {
+  margin-top: 10px;
+  padding: 8px;
+  background: #171204;
+  color: var(--yellow);
+  font-size: 18px;
+}
+.ticketHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-family: var(--font-label);
+  font-size: 10px;
+}
+.ticketList {
+  list-style: none;
+}
+.empty {
+  margin-top: 10px;
+  color: var(--dim);
+  font-size: 18px;
+}
+
+/* ---------- Chart ---------- */
+.chartHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 18px;
+  color: var(--dim);
+}
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 160 / 78;
+  image-rendering: pixelated;
+  background: var(--bg);
+}
+
+/* ---------- Mood ---------- */
+.mood {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.moodText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.moodLabel {
+  font-family: var(--font-label);
+  font-size: 11px;
+}
+.fear {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.fearBar {
+  display: flex;
+  gap: 2px;
+}
+.fearSeg {
+  width: 7px;
+  height: 12px;
+  background: var(--line);
+}
+.fearOn {
+  background: var(--red);
+}
+
+/* ---------- News bot ---------- */
+.news {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.bubbleWrap {
+  flex: 1;
+  min-width: 0;
+}
+.bubble {
+  clip-path: var(--notch);
+  background: var(--ink);
+  padding: 2px;
+}
+.bubbleInner {
+  clip-path: var(--notch);
+  background: var(--tint);
+  padding: 8px 10px;
+  min-height: 64px;
+  font-size: 20px;
+}
+.cursor {
+  animation: blink 1s steps(2, jump-none) infinite;
+}
+/* REREAD: reopen today's BREAKING card. Sits under the robot, so it costs no height next to the bubble. */
+.newsSide {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.reread {
+  min-height: 24px;
+  padding: 0 8px;
+  background: var(--yellow);
+  color: var(--bg);
+  font-family: var(--font-label);
+  font-size: 9px;
+  line-height: 24px;
+  clip-path: var(--notch);
+}
+.reread:hover {
+  background: var(--pale-gold);
+}
+.reread:focus-visible {
+  outline: 2px dashed var(--yellow);
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .reread {
+    min-height: 44px;
+    line-height: 44px;
+  }
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.btnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: stretch;
+}
+.groupLabel {
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: var(--dim);
+  align-self: center;
+  margin-right: 4px;
+}
+.spacer {
+  flex: 1;
+}
+.shieldWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.looksDisabled {
+  opacity: 0.45;
+}
+.shieldRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 4px 6px;
+  color: var(--blue);
+  outline: 2px solid var(--blue);
+  font-size: 19px;
+  line-height: 20px;
+}
+/* SHIELD pop-up (payout / bought / expired), centered over the game */
+.shieldFx {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.shieldStage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 28px 18px;
+  background: rgba(7, 26, 38, 0.92);
+  outline: 3px solid var(--blue);
+  animation: shieldHold 2.8s forwards;
+}
+.shieldBlock {
+  position: relative;
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.shieldBlock img {
+  image-rendering: pixelated;
+}
+.hitBar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 96px;
+  height: 14px;
+  margin-left: -48px;
+  background: var(--red);
+  animation: hitFall 1.1s steps(6) forwards;
+}
+.shieldText {
+  font-family: var(--font-label);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--green);
+  white-space: nowrap;
+}
+.shieldSub {
+  font-size: 20px;
+  color: var(--blue);
+}
+.shieldSmall {
+  padding: 8px 12px;
+  gap: 8px;
+  flex-direction: row;
+  outline-color: var(--dim);
+  background: var(--bg);
+  animation: shieldHold 2.2s forwards;
+}
+.shieldSmall .shieldText {
+  font-size: 11px;
+  color: var(--dim);
+}
+.shieldUp {
+  padding: 8px 12px;
+  flex-direction: row;
+  gap: 8px;
+  animation: stampIn 2.2s forwards;
+}
+.shieldUp .shieldText {
+  font-size: 12px;
+  color: var(--blue);
+}
+.pickIntro {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.playBig .btnInner {
+  font-size: 14px;
+  padding: 10px 22px;
+}
+/* Keyboard hint inside a button ("SPACE", "F"): a tiny outlined keycap. */
+.keyHint {
+  font-size: 7px;
+  line-height: 9px;
+  padding: 2px 3px;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+.ffArrows {
+  display: inline-flex;
+}
+/* Touch screens have no keyboard to hint at. */
+@media (hover: none) {
+  .keyHint {
+    display: none;
+  }
+}
+
+/* ---------- Juice ---------- */
+.shakeA {
+  animation: shakeA 0.4s steps(5) 1;
+}
+.shakeB {
+  animation: shakeB 0.4s steps(5) 1;
+}
+.flash {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: var(--red);
+  opacity: 0;
+  animation: flash 0.5s steps(5) 1;
+}
+.bob {
+  animation: bob 0.6s steps(2, jump-none) infinite;
+}
+.stomp {
+  animation: stomp 0.4s steps(2, jump-none) infinite;
+}
+.spin {
+  animation: spin 1s steps(4, jump-none) infinite alternate;
+}
+.damageLayer {
+  position: absolute;
+  left: 30px;
+  top: -12px;
+  pointer-events: none;
+}
+.damage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-label);
+  font-size: 11px;
+  white-space: nowrap;
+  animation: floatUp 1.1s steps(8) forwards;
+}
+
+.goblinPop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: -8px;
+  z-index: 30;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 8px 10px;
+  background: #0b1a0d;
+  outline: 2px solid #5fd35a;
+  pointer-events: none;
+  animation: popIn 1.6s forwards;
+}
+.goblinSay {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: #5fd35a;
+}
+.goblinSheet {
+  width: calc(12px * var(--s));
+  height: calc(11px * var(--s));
+  background-repeat: no-repeat;
+  background-size: calc(24px * var(--s)) 100%;
+  image-rendering: pixelated;
+  animation: chomp 0.3s steps(2) infinite;
+}
+.coinBites {
+  width: calc(6px * var(--s));
+  height: calc(6px * var(--s));
+  margin-bottom: calc(3px * var(--s));
+  background-repeat: no-repeat;
+  background-size: calc(24px * var(--s)) 100%;
+  image-rendering: pixelated;
+  animation: bites 1.2s steps(4) forwards;
+}
+
+.coinDrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+.droppingCoin {
+  position: absolute;
+  top: 18px;
+  animation: drop 0.6s steps(6) both;
+}
+.divText {
+  position: absolute;
+  right: 12px;
+  top: 22px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  color: var(--money);
+  background: var(--bg);
+  padding: 4px 6px;
+  animation: divHold 2s steps(8) forwards;
+}
+
+.toasts {
+  position: fixed;
+  top: 12px;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  pointer-events: none;
+  max-width: 100vw;
+  overflow: hidden;
+  padding-right: 12px;
+}
+.toast {
+  animation: toast 2.8s forwards;
+}
+.toastOuter {
+  clip-path: var(--notch);
+  background: var(--yellow);
+  padding: 2px;
+}
+.toastInner {
+  clip-path: var(--notch);
+  background: #171204;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+}
+.toastTitle {
+  font-family: var(--font-label);
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--yellow);
+}
+.toastXp {
+  font-size: 18px;
+  color: var(--green);
+}
+
+/* ---------- End panel ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(10, 14, 10, 0.86);
+}
+.endBox {
+  width: min(520px, 100%);
+}
+.endTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-label);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--yellow);
+  margin-bottom: 14px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 16px;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.verdict {
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.endButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Keyframes (stepped) ---------- */
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-3px);
+  }
+}
+@keyframes stomp {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translate(2px, 2px) rotate(-4deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0.2);
+  }
+}
+@keyframes shakeA {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-5px, 2px);
+  }
+  40% {
+    transform: translate(5px, -3px);
+  }
+  60% {
+    transform: translate(-4px, -2px);
+  }
+  80% {
+    transform: translate(3px, 3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes shakeB {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(5px, -2px);
+  }
+  40% {
+    transform: translate(-5px, 3px);
+  }
+  60% {
+    transform: translate(4px, 2px);
+  }
+  80% {
+    transform: translate(-3px, -3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes flash {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-34px);
+    opacity: 0;
+  }
+}
+@keyframes popIn {
+  0% {
+    transform: translateY(16px);
+    opacity: 0;
+    animation-timing-function: steps(3);
+  }
+  12% {
+    transform: translateY(0);
+    opacity: 1;
+    animation-timing-function: steps(1);
+  }
+  85% {
+    transform: translateY(0);
+    opacity: 1;
+    animation-timing-function: steps(3);
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+@keyframes chomp {
+  to {
+    background-position: calc(-24px * var(--s)) 0;
+  }
+}
+@keyframes bites {
+  to {
+    background-position: calc(-24px * var(--s)) 0;
+  }
+}
+@keyframes drop {
+  0% {
+    transform: translateY(-40px);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(110px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px);
+    opacity: 0;
+  }
+}
+@keyframes divHold {
+  0% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+@keyframes toast {
+  0% {
+    transform: translateX(110%);
+    animation-timing-function: steps(7);
+  }
+  14% {
+    transform: translateX(0);
+    animation-timing-function: steps(1);
+  }
+  86% {
+    transform: translateX(0);
+    animation-timing-function: steps(7);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+@keyframes shieldHold {
+  0%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes hitFall {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75%,
+  100% {
+    transform: translateY(46px);
+    opacity: 1;
+  }
+}
+@keyframes stampIn {
+  0% {
+    transform: scale(1.6) rotate(-6deg);
+    opacity: 0;
+    animation-timing-function: steps(3);
+  }
+  12% {
+    transform: scale(1) rotate(-3deg);
+    opacity: 1;
+    animation-timing-function: steps(1);
+  }
+  85% {
+    transform: scale(1) rotate(-3deg);
+    opacity: 1;
+    animation-timing-function: steps(3);
+  }
+  100% {
+    transform: scale(1) rotate(-3deg);
+    opacity: 0;
+  }
+}
+@keyframes fadeHold {
+  0%,
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Chart box (fills its panel on the one-screen desktop layout) ---------- */
+.canvasBox {
+  display: block;
+}
+
+/* ---------- HUD help + sound ---------- */
+.helpBtn {
+  margin-left: auto;
+}
+.iconBtn .btnInner {
+  min-width: 40px;
+  font-size: 14px;
+}
+.iconBtn + .iconBtn {
+  margin-left: -14px;
+}
+.cases {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+}
+/* Label and number wrap as two units, so a long count (10,475,388) drops to its own line instead of clipping. */
+.cases > span:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 6px;
+  row-gap: 4px;
+  min-width: 0;
+}
+
+/* ---------- Tutorial coach (spec §8b) ---------- */
+.coachDim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+}
+/* Only the gated "pick your bag" tip dims the screen, and the dim never catches clicks (spec §6b: tips never
+   block trading), so every preset and BUY/SELL works while it is up. */
+.coachShade {
+  fill: rgba(4, 7, 4, 0.6);
+}
+.coachFrames {
+  fill: var(--yellow);
+  animation: blink 0.8s steps(2, jump-none) infinite;
+}
+.coach {
+  position: fixed;
+  z-index: 71;
+  width: min(440px, calc(100vw - 24px));
+}
+/* Tour steps carry a bullet list, so they get a wider bubble (it sits beside the panel it explains). */
+.coachWide {
+  width: min(520px, calc(100vw - 24px));
+}
+.coachStep {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--ink);
+}
+.coachList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 19px;
+  line-height: 1.05;
+}
+.coachItem {
+  display: flex;
+  gap: 8px;
+}
+.coachIcon {
+  flex: none;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 2px;
+}
+.coachLabel {
+  color: var(--yellow);
+  font-weight: normal;
+}
+/* The ⓘ button on a panel title or label: a small notched "i" with a 40px tap target (padding given back by
+   the negative margin, so it never moves the title). */
+.infoBtn {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 13px;
+  margin: -13px -13px -13px -7px;
+  cursor: pointer;
+}
+.infoOuter {
+  display: block;
+  clip-path: var(--notch);
+  background: var(--yellow);
+  padding: 2px;
+}
+.infoInner {
+  display: block;
+  clip-path: var(--notch);
+  background: var(--tint);
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 9px;
+  color: var(--yellow);
+}
+.infoBtn:hover .infoInner,
+.infoBtn:focus-visible .infoInner {
+  background: var(--yellow);
+  color: var(--bg);
+}
+.infoBtn:focus-visible {
+  outline: 2px dashed var(--yellow);
+  outline-offset: -8px;
+}
+.coachDocked {
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: auto;
+  max-width: 440px;
+  margin: 0 auto;
+}
+.coachDocked .coachInner {
+  max-height: 58vh;
+  max-height: 58dvh;
+  overflow-y: auto;
+}
+/* Phones: no room for the robot beside the text, and the list gets smaller, so more of the panel stays visible. */
+@media (max-width: 720px) {
+  .coachWide .coachBot {
+    display: none;
+  }
+  .coachWide .coachInner {
+    padding: 10px;
+  }
+  .coachList {
+    font-size: 17px;
+    gap: 3px;
+  }
+  .coachWide .coachText {
+    font-size: 19px;
+    min-height: 0;
+  }
+}
+.coach:focus {
+  outline: none;
+}
+.coach:focus-visible {
+  outline: 2px dashed var(--yellow);
+  outline-offset: 3px;
+}
+.coachOuter {
+  clip-path: var(--notch);
+  background: var(--yellow);
+  padding: 3px;
+}
+.coachInner {
+  clip-path: var(--notch);
+  background: var(--tint);
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.coachBot {
+  flex: none;
+  margin-top: 4px;
+}
+.coachBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.coachTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--yellow);
+}
+.coachText {
+  font-size: 22px;
+  line-height: 1.1;
+  min-height: 2.2em;
+}
+.coachButtons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.coachWait {
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: var(--yellow);
+  animation: blink 1s steps(2, jump-none) infinite;
+}
+.skipLink {
+  min-height: 44px;
+  padding: 0 6px;
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: var(--dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.skipLink:hover {
+  color: var(--ink);
+}
+
+/* ---------- Story intro ---------- */
+.storyBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.storyCard {
+  --edge: var(--line);
+  width: min(660px, 100%);
+}
+.storyTriumph {
+  --edge: var(--green);
+}
+.storyOminous {
+  --edge: var(--red);
+}
+.storyOuter {
+  clip-path: var(--notch);
+  background: var(--edge);
+  padding: 3px;
+}
+.storyInner {
+  clip-path: var(--notch);
+  background: #0b1a0d;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 300px;
+}
+.storyOminous .storyInner {
+  background: #16060b;
+}
+.storyTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--yellow);
+}
+.storyCount {
+  margin-left: auto;
+  color: var(--dim);
+}
+.storyStage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.storyBull {
+  flex: none;
+}
+.storyText {
+  font-size: 30px;
+  line-height: 1.15;
+}
+.storyTriumph .storyText {
+  color: var(--green);
+}
+.storyOminous .storyText {
+  color: var(--red);
+}
+.storySource {
+  font-size: 17px;
+  color: var(--dim);
+}
+.storySource a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.storyButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+/* The bear peeks in from the right edge of the screen on the last card. */
+.storyBear {
+  position: fixed;
+  right: 0;
+  bottom: 18%;
+  z-index: 81;
+  transform: translateX(35%);
+  animation: peek 1.2s steps(4) both;
+}
+@keyframes peek {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(35%);
+  }
+}
+
+/* ---------- Virus bosses in the chart fog (spec §6b). Decorative, never catch clicks ---------- */
+.chartStage {
+  position: relative;
+  line-height: 0;
+}
+.fogZone {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.bosses {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 2px 2px 0 0;
+  overflow: hidden;
+}
+.bosses img {
+  display: block;
+}
+.boss {
+  position: relative;
+  display: block;
+}
+.bossEyes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+/* Panic days (VIX >= 50): the eyes flicker white-hot. */
+:global(:root[data-mood="panic"]) .bossEyes {
+  animation: eyeFlicker 1.3s steps(1, end) infinite;
+}
+@keyframes eyeFlicker {
+  0% {
+    opacity: 0.9;
+  }
+  18% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 0.5;
+  }
+  74%,
+  100% {
+    opacity: 0.9;
+  }
+}
+/* Slow "breathing" on the heartbeat's rhythm (same 1.7 s lub-dub as the title pulse), in held steps. */
+.bossBreathe {
+  display: block;
+  transform-origin: 50% 60%;
+  animation: bossBreathe 1.7s steps(1, end) infinite;
+}
+@keyframes bossBreathe {
+  0% {
+    transform: scale(1);
+  }
+  8% {
+    transform: scale(1.06);
+  }
+  16% {
+    transform: scale(1.02);
+  }
+  24% {
+    transform: scale(1.06);
+  }
+  34%,
+  100% {
+    transform: scale(1);
+  }
+}
+/* Hero card: the bosses recoil and go dim for a beat, then come back. */
+.bossRecoil {
+  transform-origin: 50% 60%;
+  animation: bossRecoil 1.4s steps(1, end);
+}
+@keyframes bossRecoil {
+  0% {
+    transform: translateX(4px) scale(0.86);
+    filter: brightness(0.4);
+  }
+  30% {
+    transform: translateX(3px) scale(0.88);
+    filter: brightness(0.45);
+  }
+  60% {
+    transform: translateX(1px) scale(0.94);
+    filter: brightness(0.65);
+  }
+  85% {
+    transform: scale(0.98);
+    filter: brightness(0.85);
+  }
+  100% {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ---------- Mood overlays (spec §8c). Decorative, never catch clicks ---------- */
+.atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+}
+.vignette,
+.scanlines,
+.static {
+  position: absolute;
+  inset: 0;
+}
+/* Hard-edged bands (posterised, not a smooth glow) that close in as VIX rises. */
+.vignette {
+  background: radial-gradient(
+    ellipse farthest-corner at 50% 50%,
+    transparent var(--vig-r1),
+    rgba(0, 0, 0, var(--vig-a1)) var(--vig-r1) var(--vig-r2),
+    rgba(0, 0, 0, var(--vig-a2)) var(--vig-r2)
+  );
+}
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, var(--scan)) 0 1px,
+    transparent 1px 3px
+  );
+}
+.atmo[data-level="panic"] .scanlines {
+  animation: flicker 2.6s steps(1) infinite;
+}
+.static {
+  display: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -0.6'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  image-rendering: pixelated;
+}
+.atmo[data-level="panic"] .static {
+  display: block;
+  animation: staticShift 0.4s steps(1) infinite;
+}
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0.5;
+  }
+  9% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+  83% {
+    opacity: 0.55;
+  }
+  85% {
+    opacity: 1;
+  }
+}
+@keyframes staticShift {
+  0% {
+    background-position: 0 0;
+  }
+  25% {
+    background-position: -48px 32px;
+  }
+  50% {
+    background-position: 64px -16px;
+  }
+  75% {
+    background-position: -16px -56px;
+  }
+}
+
+/* ---------- BREAKING card (spec §6, §6b, §8c) ---------- */
+.bcBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 4, 4, 0.8);
+}
+/* Hero days: a short burst of warm relief light over the whole screen. */
+.reliefFlash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pale-gold);
+  opacity: 0;
+  animation: relief 1.2s steps(6) 1;
+}
+.bcCard {
+  --edge: var(--red);
+  --fill: #120608;
+  position: relative;
+  display: flex;
+  width: min(640px, 100%);
+  max-height: 100%;
+}
+.bcHero {
+  --edge: var(--pale-gold);
+  --fill: #14110a;
+}
+.bcOuter {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  clip-path: var(--notch);
+  background: var(--edge);
+  padding: 3px;
+}
+.bcInner {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  clip-path: var(--notch);
+  background: var(--fill);
+  padding: 0 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bcHead {
+  margin: 0 -16px;
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+}
+.bcAlarm .bcHead {
+  background-image: var(--hazard);
+  background-size: 16px 16px;
+  image-rendering: pixelated;
+  animation: hazard 1.2s steps(4) infinite;
+}
+.bcHero .bcHead {
+  background: var(--pale-gold);
+}
+.bcLabel,
+.bcDate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: #000;
+  color: var(--yellow);
+}
+.bcDate {
+  color: #e8eef4;
+}
+.bcHero .bcLabel,
+.bcHero .bcDate {
+  background: transparent;
+  color: #2a2205;
+}
+.warnFlash {
+  animation: blink 0.8s steps(2, jump-none) infinite;
+}
+.bcList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bcItem {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.bcItemHero {
+  grid-template-columns: 132px minmax(0, 1fr);
+  padding: 8px;
+  background: #1f1a0a;
+  outline: 2px solid var(--dark-gold);
+  outline-offset: -2px;
+}
+.bcIcon {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+.bcBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.bcTag {
+  font-family: var(--font-label);
+  font-size: 10px;
+  line-height: 14px;
+  color: var(--yellow);
+}
+.bcHeadline {
+  min-height: 1.05em;
+  font-family: var(--font-body);
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 1.05;
+  color: #e8eef4;
+}
+.bcItemHero .bcHeadline {
+  color: var(--pale-gold);
+}
+.bcMeaning {
+  font-size: 20px;
+  color: #c0c7cf;
+}
+.bcSource {
+  font-size: 17px;
+  color: #a3acb6;
+}
+.bcSource a {
+  display: inline-block;
+  min-height: 24px;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.bcMarket {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 8px;
+  background: #000;
+  font-size: 21px;
+  min-height: 2.3em;
+}
+.bcMarketLabel {
+  flex: none;
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: var(--yellow);
+}
+.bcButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+}
+.bcHint {
+  font-size: 18px;
+  color: var(--dim);
+}
+/* Hero art: the character, its prop, and stepped rays of relief light behind them. */
+.heroArt {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  min-height: 64px;
+  padding-top: 6px;
+}
+.heroSprite,
+.printer,
+.check {
+  position: relative;
+  z-index: 1;
+}
+.check {
+  margin-bottom: 18px;
+}
+.rays {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  background: repeating-conic-gradient(
+    rgba(255, 248, 176, 0.42) 0 12deg,
+    transparent 12deg 30deg
+  );
+  mask-image: radial-gradient(
+    circle,
+    #000 0 40%,
+    rgba(0, 0, 0, 0.5) 40% 58%,
+    transparent 58%
+  );
+  transform: rotate(30deg);
+  opacity: 0.8;
+  animation: raysIn 1.4s steps(7) both;
+}
+.printer {
+  width: calc(12px * var(--s));
+  height: calc(10px * var(--s));
+  background-repeat: no-repeat;
+  background-size: calc(24px * var(--s)) 100%;
+  image-rendering: pixelated;
+  animation: printer 0.5s steps(2) infinite;
+}
+@keyframes printer {
+  to {
+    background-position: calc(-24px * var(--s)) 0;
+  }
+}
+@keyframes relief {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes hazard {
+  to {
+    background-position: 16px 0;
+  }
+}
+@keyframes raysIn {
+  from {
+    transform: scale(0.3) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1) rotate(30deg);
+    opacity: 0.8;
+  }
+}
+
+/* ---------- Story: ominous touches (spec §8c) ---------- */
+.storyCard {
+  position: relative;
+  z-index: 1;
+}
+/* Faint scanlines and a dark edge behind the card. */
+.storyDread::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.35) 0 1px,
+      transparent 1px 3px
+    ),
+    radial-gradient(
+      ellipse farthest-corner at 50% 50%,
+      transparent 66%,
+      rgba(60, 0, 10, 0.22) 66% 82%,
+      rgba(60, 0, 10, 0.4) 82%
+    );
+}
+.storyAlert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px;
+  background: var(--red);
+  color: #120208;
+  font-family: var(--font-label);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+.glitch {
+  display: inline-block;
+  color: var(--red);
+  animation: glitch 3.6s steps(1) infinite;
+}
+.storyOminous .glitch {
+  color: #ffd0d8;
+}
+@keyframes glitch {
+  0% {
+    transform: none;
+    text-shadow: none;
+  }
+  86% {
+    transform: translate(-2px, 0);
+    text-shadow:
+      2px 0 var(--blue),
+      -2px 0 var(--red);
+  }
+  88% {
+    transform: translate(2px, -1px);
+    text-shadow: -2px 0 var(--blue);
+  }
+  90% {
+    transform: none;
+    text-shadow: none;
+  }
+  95% {
+    transform: skewX(-10deg);
+  }
+  96% {
+    transform: none;
+  }
+}
+
+/* ---------- Reduced motion: no shake/flash/bounce; pop-ups just appear and fade ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .shakeA,
+  .shakeB,
+  .bob,
+  .stomp,
+  .spin,
+  .goblinSheet,
+  .coinBites,
+  .cursor,
+  .coachFrames,
+  .coachWait,
+  .storyBear,
+  .warnFlash,
+  .glitch,
+  .bcAlarm .bcHead,
+  .rays,
+  .printer,
+  .atmo[data-level="panic"] .scanlines {
+    animation: none;
+  }
+  .flash,
+  .droppingCoin,
+  .hitBar,
+  .reliefFlash,
+  .atmo[data-level="panic"] .static {
+    display: none;
+  }
+  .damage,
+  .stamp,
+  .goblinPop,
+  .toast,
+  .divText,
+  .shieldStage {
+    animation-name: fadeHold;
+    animation-timing-function: steps(4);
+  }
+}
+
+/* ---------- Desktop: the whole game on one screen, no page scroll ---------- */
+@media (min-width: 721px) and (min-height: 600px) {
+  .screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 1440px;
+    padding: 6px 16px 8px;
+  }
+  .panelBody {
+    padding: 16px 12px 8px;
+  }
+  /* HUD on top; watchlist + bag on the left; chart (flexes) + mood/news on the right; action bar along the bottom. */
+  .grid {
+    flex: 1;
+    min-height: 0;
+    margin-top: 6px;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 8px 14px;
+  }
+  .col {
+    min-height: 0;
+    gap: 8px;
+  }
+  .oControls {
+    grid-column: 1 / -1;
+  }
+  .oBag,
+  .oChart {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .bagPanel,
+  .chartPanel {
+    flex: 1;
+    min-height: 0;
+  }
+  .bagBody {
+    overflow-y: auto;
+  }
+  .chartBody {
+    display: flex;
+    flex-direction: column;
+  }
+  .canvasBox {
+    --fit: 1;
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .canvasBox .canvas {
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .duo {
+    gap: 14px;
+  }
+  .bubbleInner {
+    min-height: 56px;
+  }
+  .row {
+    min-height: 40px;
+    padding: 2px 8px;
+  }
+  .hint {
+    margin-top: 4px;
+  }
+  /* Paper P&L sits at the end of its row instead of on a second line. */
+  .bagRow {
+    grid-template-columns: 28px 44px minmax(40px, 1fr) 52px 100px;
+    min-height: 26px;
+  }
+  .paper {
+    grid-column: auto;
+    margin-top: 0;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .ticket,
+  .empty {
+    margin-top: 6px;
+  }
+  .ticket {
+    padding: 3px 8px;
+  }
+  .ticketHead {
+    margin-bottom: 1px;
+  }
+  .ticketHead .btn,
+  .ticketHead .btnInner {
+    min-height: 0;
+  }
+  .ticketHead .btnInner {
+    padding: 4px 8px;
+  }
+  /* Action bar: the groups sit side by side and wrap. */
+  .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+  }
+  .pickIntro {
+    flex-basis: 100%;
+    margin-bottom: 0;
+    font-size: 19px;
+  }
+  .playRow {
+    flex: 1 1 auto;
+  }
+}
+
+/* ---------- Phones: one column ---------- */
+@media (max-width: 720px) {
+  .screen {
+    padding: 10px 12px 24px;
+  }
+  .duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Phones: one column, with the chart and the action buttons first so play needs no long scroll. */
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .col {
+    display: contents;
+  }
+  .oChart {
+    order: 1;
+  }
+  .oControls {
+    order: 2;
+  }
+  .oBag {
+    order: 3;
+  }
+  .oWatch {
+    order: 4;
+  }
+  .oDuo {
+    order: 5;
+  }
+  .hud {
+    gap: 10px 16px;
+  }
+  .btnRow > .btn {
+    flex: 1 1 calc(50% - 8px);
+  }
+  .groupLabel {
+    flex-basis: 100%;
+  }
+  .spacer {
+    display: none;
+  }
+  .storyInner {
+    min-height: 0;
+    padding: 14px;
+  }
+  .storyText {
+    font-size: 25px;
+  }
+  .bcBackdrop {
+    padding: 12px;
+  }
+  .bcInner {
+    padding: 0 12px 12px;
+  }
+  .bcHead {
+    margin: 0 -12px;
+  }
+  .bcItemHero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bcItem {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+  .bcItemHero.bcItem {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bcHeadline {
+    font-size: 24px;
+  }
+}
+
+/* ---------- Yes/no box (overwrite save, leave game) ---------- */
+.confirmBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 7, 4, 0.86);
+}
+.confirmBox {
+  --edge: var(--yellow);
+  width: min(460px, 100%);
+}
+.confirmWarn {
+  --edge: var(--red);
+}
+.confirmOuter {
+  clip-path: var(--notch);
+  background: var(--edge);
+  padding: 3px;
+}
+.confirmInner {
+  clip-path: var(--notch);
+  background: var(--tint);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.confirmTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-label);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--yellow);
+}
+.confirmWarn .confirmTitle {
+  color: var(--red);
+}
+.confirmText {
+  font-size: 22px;
+}
+.confirmButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ---------- Title screen (spec §9b) ---------- */
+.title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 24px 16px;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* Crisis select + sources: header on top, content below. */
+.titleTall {
+  justify-content: flex-start;
+  gap: 16px;
+}
+.title > :not(.pulse, .titleScan, .confirmBackdrop) {
+  position: relative;
+  z-index: 30;
+}
+/* Heartbeat behind the logo: hard-banded red rings (no blur), lub-dub in held steps. */
+.pulse {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  z-index: 1;
+  width: min(1100px, 170vw);
+  aspect-ratio: 2 / 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 59, 92, 0.26) 0 30%,
+    rgba(255, 59, 92, 0.16) 30% 52%,
+    rgba(255, 59, 92, 0.08) 52% 74%,
+    rgba(255, 59, 92, 0.03) 74% 92%,
+    transparent 92%
+  );
+  opacity: 0.35;
+  pointer-events: none;
+  animation: heartbeat 1.7s steps(1, end) infinite;
+}
+@keyframes heartbeat {
+  0% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  8% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+  16% {
+    opacity: 0.55;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  24% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  34%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.titleScan {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0 2px,
+    transparent 2px 4px
+  );
+}
+.titleTop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  /* Room for the boss's head above the logo. */
+  padding-top: 96px;
+}
+.titleTop > * {
+  position: relative;
+  z-index: 1;
+}
+/* One boss looms behind the logo, its lower half lost in hard-banded shadow. Breathes with the heartbeat. */
+.titleTop > .titleBoss {
+  position: absolute;
+  left: 50%;
+  top: 96px;
+  z-index: 0;
+  /* The eyes (rows 5-6 of 12) peek out just above the logo; the rest hides behind it. */
+  margin: -102px 0 0 -84px;
+  animation: bossBreathe 1.7s steps(1, end) infinite;
+}
+.titleBoss img {
+  width: 168px;
+  height: 168px;
+}
+.titleBoss::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0 48%,
+    rgba(10, 14, 10, 0.45) 48% 62%,
+    rgba(10, 14, 10, 0.7) 62% 78%,
+    rgba(10, 14, 10, 0.9) 78%
+  );
+}
+/* Press Start 2P draws on an 8-unit grid, so 0.125em = one font pixel: the shadows are stacked 1-pixel copies. */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+  font-family: var(--font-label);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+}
+.logoTop {
+  font-size: min(clamp(20px, 6.6vw, 52px), 6.4vh);
+  color: var(--ink);
+  text-shadow:
+    0.125em 0.125em 0 var(--line),
+    0.25em 0.25em 0 #000;
+}
+.logoCrash {
+  display: flex;
+  font-size: min(clamp(44px, 16vw, 116px), 14vh);
+  color: var(--red);
+  padding-bottom: 0.6em;
+}
+/* CRASH tumbles: each letter one step lower, like a falling chart. */
+.logoLetter {
+  transform: translateY(calc(var(--i) * var(--i) * 0.03em));
+  text-shadow:
+    0.0625em 0.0625em 0 #a8102e,
+    0.125em 0.125em 0 #6a0a1e,
+    0.1875em 0.1875em 0 #2a040c;
+}
+.logoSmall {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.6em;
+}
+.logoSmall .logoTop,
+.logoSmall .logoCrash {
+  font-size: clamp(16px, 3.4vw, 26px);
+  padding-bottom: 0.4em;
+}
+.logoSmall .logoLetter {
+  transform: translateY(calc(var(--i) * 0.08em));
+}
+.titleSub {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-label);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--yellow);
+  letter-spacing: 0.2em;
+}
+.pressStart {
+  min-height: 48px;
+  padding: 8px 18px;
+  font-family: var(--font-label);
+  font-size: clamp(14px, 3.4vw, 18px);
+  line-height: 1;
+  color: var(--yellow);
+  text-shadow: 0.125em 0.125em 0 #000;
+  animation: blink 1.1s steps(2, jump-none) infinite;
+}
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(340px, 100%);
+}
+.menuBtn {
+  width: 100%;
+}
+.menuBtn .btnInner {
+  justify-content: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 18px;
+  padding-left: 12px;
+}
+.menuBtn .btnInner > span {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.menuCursor {
+  visibility: hidden;
+}
+.menuBtn:focus-visible,
+.menuBtn:hover {
+  --edge: var(--yellow);
+  --ink: var(--yellow);
+}
+.menuBtn:focus .menuCursor,
+.menuBtn:hover .menuCursor {
+  visibility: visible;
+}
+.menuNote {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--dim);
+}
+.screenHead {
+  font-family: var(--font-label);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--yellow);
+  text-align: center;
+}
+
+/* Crisis select */
+.crisis,
+.sources {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: min(760px, 100%);
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.tile {
+  display: flex;
+  min-height: 150px;
+  padding: 0;
+  text-align: center;
+  --edge: var(--green);
+  --fill: #0f2412;
+}
+.tileOuter {
+  display: flex;
+  flex: 1;
+  clip-path: var(--notch);
+  background: var(--edge);
+  padding: 3px 3px 7px;
+}
+.tileInner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  clip-path: var(--notch);
+  background: var(--fill);
+}
+.tile:active:not([aria-disabled="true"]) .tileOuter {
+  padding-bottom: 4px;
+  transform: translateY(3px);
+}
+.tile:hover:not([aria-disabled="true"]),
+.tile:focus-visible:not([aria-disabled="true"]) {
+  --edge: var(--yellow);
+}
+.tileName {
+  font-family: var(--font-label);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink);
+}
+.tileMeta {
+  font-size: 20px;
+  color: var(--dim);
+}
+.tilePlay {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  color: var(--yellow);
+}
+.tileLocked {
+  --edge: var(--line);
+  --fill: #0b100b;
+  cursor: not-allowed;
+}
+.tileLocked .tileName {
+  color: var(--dim);
+}
+.tileLocked .tileIcon {
+  opacity: 0.8;
+}
+.tileSoon {
+  font-family: var(--font-label);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+.lockedNote {
+  min-height: 22px;
+  font-size: 20px;
+  color: var(--dim);
+}
+
+/* Sources */
+.sources {
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100dvh - 120px);
+}
+.sourcesPanel {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.sourcesBody {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 16px 6px 8px 14px;
+}
+.sourcesScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-color: var(--line) transparent;
+}
+.honesty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 22px;
+  color: var(--yellow);
+}
+.srcSection + .srcSection {
+  margin-top: 16px;
+}
+.srcTitle {
+  margin-bottom: 8px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  line-height: 14px;
+  color: var(--yellow);
+}
+.srcList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.srcItem {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 2px 12px;
+  font-size: 19px;
+  line-height: 1.15;
+}
+.srcDate {
+  color: var(--dim);
+  white-space: nowrap;
+}
+.srcText {
+  grid-column: 2;
+  overflow-wrap: anywhere;
+}
+.srcText a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.srcOwn {
+  color: var(--dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .pressStart,
+  .bossBreathe,
+  .bossRecoil,
+  .titleBoss {
+    animation: none;
+  }
+  :global(:root[data-mood="panic"]) .bossEyes {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 720px) {
+  .title {
+    gap: 18px;
+  }
+  .titleTop > .titleBoss {
+    margin: -88px 0 0 -72px;
+  }
+  .titleTop {
+    padding-top: 84px;
+  }
+  .titleTop > .titleBoss {
+    top: 84px;
+  }
+  .titleBoss img {
+    width: 144px;
+    height: 144px;
+  }
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .tile {
+    min-height: 0;
+  }
+  .tileInner {
+    padding: 10px;
+    gap: 4px;
+  }
+  .srcItem {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .srcText {
+    grid-column: 1;
+  }
+}
+/* The count uses the narrow body font so 10,475,388 fits the MOOD column. */
+.cases > span:last-child > span:last-child {
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1;
+}

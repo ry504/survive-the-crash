@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "game", "runtimeExecutable": "npx", "runtimeArgs": ["next", "dev", "-p", "3123"], "port": 3123 }
+  ]
+}
